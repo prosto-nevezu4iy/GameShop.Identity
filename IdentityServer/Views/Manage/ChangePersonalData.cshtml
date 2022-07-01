@@ -1,0 +1,49 @@
+﻿@using IdentityServer.Contracts.ViewModels.Manage
+@model ChangePersonalDataViewModel
+@{
+    ViewData["Title"] = "Change Personal Data";
+}
+
+<h1>@ViewData["Title"].</h1>
+
+<partial name="_ValidationSummary" />
+
+<form asp-controller="Manage" asp-action="ChangePersonalData" method="post" class="form-horizontal" role="form">
+    <h4>Change Password Form</h4>
+    <hr />
+    <div class="form-group">
+        <label asp-for="FirstName" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="FirstName" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="LastName" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="UserName" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="UserName" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="col-md-4 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Email" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="col-md-4 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">Change Personal Data</button>
+        </div>
+    </div>
+</form>
