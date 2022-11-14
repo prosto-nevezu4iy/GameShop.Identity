@@ -2,9 +2,11 @@
 using GameShop.Identity.Services;
 using IdentityModel;
 using IdentityServer.Communication.Email;
+using IdentityServer.Contracts.Settings;
 using IdentityServer.Contracts.ViewModels.Manage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,19 +22,24 @@ namespace IdentityServer.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IEqualityComparer<Claim> _equalityComparer;
         private readonly IIdentityService _identityService;
+        private readonly IConfiguration _configuration;
+        private readonly AppSettings _appSettings;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
-        IEqualityComparer<Claim> equalityComparer, 
-        IIdentityService identityService)
+        IEqualityComparer<Claim> equalityComparer,
+        IIdentityService identityService,
+        IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _equalityComparer = equalityComparer;
             _identityService = identityService;
+            _configuration = configuration;
+            _appSettings = configuration.Get<AppSettings>();
         }
 
         [HttpGet]
@@ -245,6 +252,12 @@ namespace IdentityServer.Controllers
             var result = await _userManager.AddLoginAsync(user, info);
             var message = result.Succeeded ? ManageMessageId.AddLoginSuccess : ManageMessageId.Error;
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Back()
+        {
+            return Redirect(_appSettings.Clients.GameShop.WebHost);
         }
 
         private void AddErrors(IdentityResult result)

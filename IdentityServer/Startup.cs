@@ -19,6 +19,8 @@ using GameShop.Identity.Services.Helpers;
 using System.Security.Claims;
 using GameShop.Identity.Services.External;
 using GameShop.Identity.Services;
+using IdentityServer.IdentityConfig;
+using IdentityServer4.Services;
 
 namespace IdentityServer
 {
@@ -60,9 +62,9 @@ namespace IdentityServer
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
             })
-                .AddInMemoryIdentityResources(IdentityConfig.IdentityResources)
-                .AddInMemoryApiScopes(IdentityConfig.ApiScopes)
-                .AddInMemoryClients(IdentityConfig.Clients)
+                .AddInMemoryIdentityResources(Config.IdentityResources)
+                //.AddInMemoryApiScopes(IdentityConfig.ApiScopes)
+                .AddInMemoryClients(Config.GetClients(AppSettings.Clients.GameShop))
                 .AddAspNetIdentity<ApplicationUser>();
 
             // not recommended for production - you need to store your key material somewhere secure
@@ -82,6 +84,7 @@ namespace IdentityServer
             services.AddScoped<IExternalAuthService, ExternalAuthService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IEqualityComparer<Claim>, ClaimsComparer>();
+            services.AddTransient<IProfileService, AspNetIdentityProfileService>();
         }
 
         public void Configure(IApplicationBuilder app)
