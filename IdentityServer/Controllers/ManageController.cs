@@ -288,11 +288,17 @@ namespace IdentityServer.Controllers
 
         private ICollection<Claim> ExtractClaims(ChangePersonalDataViewModel model)
         {
-            return new List<Claim>
+            var newClaims = new List<Claim>();
+            if(!string.IsNullOrEmpty(model.FirstName))
             {
-                new Claim(JwtClaimTypes.GivenName, model.FirstName),
-                new Claim(JwtClaimTypes.FamilyName, model.LastName),
-            };
+                newClaims.Add(new Claim(JwtClaimTypes.GivenName, model.FirstName));
+            }
+
+            if(!string.IsNullOrEmpty(model.LastName))
+            {
+                newClaims.Add(new Claim(JwtClaimTypes.FamilyName, model.LastName));
+            }
+            return newClaims;
         }
 
         private async Task<ChangePersonalDataViewModel> BuildManageIndexViewModel(ApplicationUser user)
