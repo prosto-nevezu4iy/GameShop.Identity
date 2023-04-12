@@ -255,7 +255,7 @@ namespace IdentityServer.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Back()
+        public ActionResult Back()
         {
             return Redirect(_appSettings.Clients.GameShop.WebHost);
         }

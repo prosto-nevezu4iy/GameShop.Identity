@@ -2,7 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4;
+using Duende.IdentityServer;
+using Duende.IdentityServer.Services;
+using GameShop.Identity.DAL;
+using GameShop.Identity.DAL.Entities;
+using GameShop.Identity.Services;
+using GameShop.Identity.Services.External;
+using GameShop.Identity.Services.Helpers;
+using IdentityServer.Communication.Email;
+using IdentityServer.Contracts.Settings;
+using IdentityServer.IdentityConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,17 +19,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using IdentityServer.Contracts.Settings;
-using GameShop.Identity.DAL;
-using GameShop.Identity.DAL.Entities;
-using IdentityServer.Communication.Email;
 using System.Collections.Generic;
-using GameShop.Identity.Services.Helpers;
 using System.Security.Claims;
-using GameShop.Identity.Services.External;
-using GameShop.Identity.Services;
-using IdentityServer.IdentityConfig;
-using IdentityServer4.Services;
 
 namespace IdentityServer
 {
@@ -48,6 +48,8 @@ namespace IdentityServer
                     o.MigrationsHistoryTable("__EFMigrationsHistory", IdentityContext.SchemaName);
                 }));
 
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
@@ -66,9 +68,6 @@ namespace IdentityServer
                 //.AddInMemoryApiScopes(IdentityConfig.ApiScopes)
                 .AddInMemoryClients(Config.GetClients(AppSettings.Clients.GameShop))
                 .AddAspNetIdentity<ApplicationUser>();
-
-            // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -92,7 +91,7 @@ namespace IdentityServer
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
 
             app.UseStaticFiles();

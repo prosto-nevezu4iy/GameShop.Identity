@@ -1,10 +1,9 @@
-﻿using GameShop.Identity.DAL.Entities;
-using IdentityServer4.Extensions;
-using IdentityServer4.Models;
-using IdentityServer4.Services;
+﻿using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using GameShop.Identity.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IdentityServer.IdentityConfig
