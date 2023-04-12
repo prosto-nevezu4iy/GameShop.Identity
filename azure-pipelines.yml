@@ -17,7 +17,7 @@ steps:
   inputs:
     version: '6.x'
 
-- script: dotnet tool install --global dotnet-ef --version 3.1.24
+- script: dotnet tool install --global dotnet-ef
   displayName: 'Install EF Core CLI'
 
 - task: DotNetCoreCLI@2
