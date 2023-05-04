@@ -15,6 +15,7 @@ variables:
 steps:
 - task: UseDotNet@2
   inputs:
+    packageType: 'sdk'
     version: '6.x'
 
 - script: dotnet tool install --global dotnet-ef --version 6.0.16
