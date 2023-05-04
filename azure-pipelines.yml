@@ -16,7 +16,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '6.x'
+    version: '6.0.0'
 
 - script: dotnet tool install --global dotnet-ef --version 6.0.16
   displayName: 'Install EF Core CLI'
