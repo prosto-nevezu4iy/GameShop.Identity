@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 variables:
   buildConfiguration: 'Release'
@@ -15,9 +15,10 @@ variables:
 steps:
 - task: UseDotNet@2
   inputs:
-    version: '3.1.x'
+    packageType: 'sdk'
+    version: '6.0.x'
 
-- script: dotnet tool install --global dotnet-ef --version 3.1.24
+- script: dotnet tool install --global dotnet-ef --version 6.0.16
   displayName: 'Install EF Core CLI'
 
 - task: DotNetCoreCLI@2
@@ -36,8 +37,8 @@ steps:
   inputs:
     command: 'custom'
     custom: 'ef'
-    arguments: 'migrations script --startup-project $(Build.SourcesDirectory)/IdentityServer  --project $(Build.SourcesDirectory)/GameShop.Identity.DAL -i -o $(Build.ArtifactStagingDirectory)/migration.sql'
-  displayName: 'Run Entity Framework Migrations'
+    arguments: 'migrations script --startup-project $(Build.SourcesDirectory)/IdentityServer  --project $(Build.SourcesDirectory)/GameShop.Identity.DAL -i -o $(Build.ArtifactStagingDirectory)/IdentityContext.sql'
+  displayName: 'Generate Entity Framework Migration script'
 
 - task: DotNetCoreCLI@2
   inputs:
