@@ -75,6 +75,13 @@ namespace IdentityServer
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                     options.ClientId = AppSettings.Authentication.Google.ClientId;
                     options.ClientSecret = AppSettings.Authentication.Google.ClientSecret;
+                })
+                .AddGitHub(options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.ClientId = AppSettings.Authentication.Github.ClientId;
+                    options.ClientSecret = AppSettings.Authentication.Github.ClientSecret;
+                    options.Scope.Add("user:email");
                 });
 
             services.AddSingleton(AppSettings);
