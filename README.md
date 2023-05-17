@@ -13,7 +13,7 @@ It's build with IdentityServer4.
 
 ## Roadmap
 
-- Github / Linkedin authentication
+- Github authentication
 
 - Multi factor authentication
 
