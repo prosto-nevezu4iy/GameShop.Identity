@@ -5,15 +5,13 @@ It's build with IdentityServer4.
 
 ## Features
 
-- Google authentication
+- Google / Github authentication
 - Standart authentication using login and password
 - Registration with email sending
 - Forget password / reset password
 
 
 ## Roadmap
-
-- Github authentication
 
 - Multi factor authentication
 
